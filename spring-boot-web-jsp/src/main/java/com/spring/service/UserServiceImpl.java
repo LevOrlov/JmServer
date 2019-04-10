@@ -16,13 +16,10 @@ public class UserServiceImpl implements UserServiсe {
 
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public void addUser(User application) {
-        application.setPassword(passwordEncoder.encode(application.getPassword()));
-        userDao.addUser(application);
+       userDao.addUser(application);
     }
 
     @Override
@@ -32,8 +29,7 @@ public class UserServiceImpl implements UserServiсe {
 
     @Override
     public void updateUser(User application) {
-        application.setPassword(passwordEncoder.encode(application.getPassword()));
-        userDao.updateUser(application);
+       userDao.updateUser(application);
     }
 
     @Override
