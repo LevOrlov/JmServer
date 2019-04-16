@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,20 @@ public class UserDaoHibernateImpl implements UserDao {
                 .getSingleResult();
         roles.add(role);
         application.setRoles(roles);
-        em.persist(application);
+        try {
+            em.createQuery(
+                    "FROM User c WHERE c.name LIKE :user")
+                    .setParameter("user", application.getName())
+                    .getSingleResult();
+
+        } catch (NonUniqueResultException e) {
+            em.merge(application);
+        } catch (NoResultException e) {
+            em.persist(application);
+        }
+
     }
+
     //каскадирование
 
     @Override

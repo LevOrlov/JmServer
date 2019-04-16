@@ -50,6 +50,7 @@ public class RestControllerMy {
 
         return userServiсe.getUserById(id);
     }
+
     @RequestMapping(value = "/rest/getuser/{name}", method = RequestMethod.POST)
     public User getUserByName(@PathVariable("name") String name) {
 
