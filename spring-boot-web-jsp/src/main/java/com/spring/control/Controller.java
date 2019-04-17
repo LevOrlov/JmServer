@@ -1,7 +1,7 @@
 package com.spring.control;
 
 import com.spring.model.User;
-import com.spring.service.UserServiсe;
+import com.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +11,12 @@ import java.util.List;
 
 
 @RestController
-public class RestControllerMy {
+public class Controller {
 
-    private final UserServiсe userService;
+    private final UserService userService;
 
     @Autowired
-    public RestControllerMy(UserServiсe userService) {
+    public Controller(UserService userService) {
         this.userService = userService;
     }
 

@@ -4,7 +4,7 @@ import com.spring.model.User;
 
 import java.util.List;
 
-public interface UserServiсe {
+public interface UserService {
     void addUser(User user);
 
     void deleteUser(int userId);
