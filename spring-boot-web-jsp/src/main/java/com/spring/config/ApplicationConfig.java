@@ -14,9 +14,13 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Configuration
 @EnableWebSecurity
 public class ApplicationConfig extends WebSecurityConfigurerAdapter {
-    private static String REALM = "MY_TEST_REALM";
+    private static String REALM = "LEV";
+    private final BasicAuthenticationEntryPoint basicAuthEntryPoint;
+
     @Autowired
-    private BasicAuthenticationEntryPoint basicAuthEntryPoint;
+    public ApplicationConfig(BasicAuthenticationEntryPoint basicAuthEntryPoint) {
+        this.basicAuthEntryPoint = basicAuthEntryPoint;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

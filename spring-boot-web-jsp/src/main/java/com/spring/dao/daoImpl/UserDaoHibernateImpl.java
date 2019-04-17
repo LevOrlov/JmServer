@@ -22,29 +22,26 @@ public class UserDaoHibernateImpl implements UserDao {
     private EntityManager em;
 
     @Override
-    public void addUser(User application) {
+    public void addUser(User user) {
         ArrayList<Role> roles = new ArrayList<>();
         Role role = (Role) em.createQuery(
                 "FROM Role c WHERE c.name LIKE :user")
                 .setParameter("user", "USER")
                 .getSingleResult();
         roles.add(role);
-        application.setRoles(roles);
+        user.setRoles(roles);
         try {
             em.createQuery(
                     "FROM User c WHERE c.name LIKE :user")
-                    .setParameter("user", application.getName())
+                    .setParameter("user", user.getName())
                     .getSingleResult();
 
         } catch (NonUniqueResultException e) {
-            em.merge(application);
+            em.merge(user);
         } catch (NoResultException e) {
-            em.persist(application);
+            em.persist(user);
         }
-
     }
-
-    //каскадирование
 
     @Override
     public void deleteUser(int userId) {
@@ -53,8 +50,8 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public void updateUser(User application) {
-        em.merge(application);
+    public void updateUser(User user) {
+        em.merge(user);
     }
 
     @Override
@@ -64,15 +61,14 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public User getUserById(int userId) {
-
         return em.find(User.class, userId);
     }
 
     @Override
-    public User getUserByLogin(String name) {
+    public User getUserByLogin(String login) {
         return (User) em.createQuery(
                 "FROM User c WHERE c.name LIKE :user")
-                .setParameter("user", name)
+                .setParameter("user", login)
                 .getSingleResult();
 
     }
